@@ -28,7 +28,9 @@ function insertDataIntoTable() {
             $.ajax({
                 url: "/Tender/CreateTender",
                 type: "POST",
-                data: JSON.stringify({ tenderData: values }),
+                data: JSON.stringify({
+                    tender: values 
+                }),
                 contentType: 'application/json; charset=utf-8',
             });
         },
@@ -53,15 +55,7 @@ function insertDataIntoTable() {
             });
             console.log(editedTender);
         },
-        remove: function (key) {
-            $.ajax({
-                url: "/Tender/DeleteTender",
-                type: "POST",
-                data: JSON.stringify({ Id: key }),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-            });
-        }
+        
     });
 
     function dropDownTenderStatusData() {
@@ -176,7 +170,7 @@ function insertDataIntoTable() {
         editing: {
             mode: "popup",
             allowUpdating: true,
-            allowDeleting: true,
+            allowDeleting: false,
             allowAdding: true,
             popup: {
                 title: "Tender Info",
@@ -335,7 +329,6 @@ function insertDataIntoTable() {
                     var dataGrid = $dataGrid.dxDataGrid("instance");
 
                     args.component.on("valueChanged", function (args) {
-                        console.log(args);
                         var value = args.value;
 
                         dataGrid.selectRows(value, true);

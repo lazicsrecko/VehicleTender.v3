@@ -1,4 +1,5 @@
 ﻿using BusinessLogic;
+using BusinessLogic.DataTransferObjects;
 using DataAccessLayer_DAL;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,11 @@ namespace VehicleTender.Controllers
         }
 
         [HttpPost]
-        public void CreateTender(Tender tenderData)
+        public void CreateTender(TenderDTO tender)
         {
             try
             {
-                mainBLL.CreateTender(tenderData);
+                mainBLL.CreateTender(tender);
             }
             catch (Exception)
             {
@@ -60,18 +61,6 @@ namespace VehicleTender.Controllers
             }
         }
 
-        public void DeleteTender(int Id)
-        {
-            try
-            {
-                mainBLL.DeleteTender(Id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         public JsonResult TenderStatusDropdown()
         {
             try

@@ -15,7 +15,7 @@ namespace DataAccessLayer_DAL
         public int StockId { get; set; }
         [Display(Name ="Tender")]
         public int TenderId { get; set; }
-        public DateTime SaleDate { get; set; }
+        public DateTime? SaleDate { get; set; }
 
         [ForeignKey("StockId")]
         public virtual StockInfo Stock { get; set; }

@@ -103,7 +103,6 @@ function insertDataIntoTable() {
                         url: "/Location/LocationDropdown",
                         type: "GET",
                         data: "{}",
-                        dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
                             d.resolve(data);
@@ -118,6 +117,7 @@ function insertDataIntoTable() {
         }
         return lookupLocationSource;
     };
+    console.log(dropDownLocationData());
 
     $("#dataGrid").dxDataGrid({
         dataSource: stock,
@@ -196,8 +196,7 @@ function insertDataIntoTable() {
                 {
                     dataSource: dropDownData(),
                     valueExpr: "id",
-                    displayExpr: "text",
-
+                    displayExpr: "text"
                 }
             },
             {
@@ -219,9 +218,8 @@ function insertDataIntoTable() {
                 lookup:
                 {
                     dataSource: dropDownLocationData(),
-                    valueExpr: "id",
-                    displayExpr: "text",
-
+                    valueExpr: 'id',
+                    displayExpr: 'text'
                 }
             },
             {

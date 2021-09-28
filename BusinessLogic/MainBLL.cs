@@ -319,7 +319,9 @@ namespace BusinessLogic
                             Mileage = x.Mileage,
                             Price = x.Price,
                             RegNo = x.RegNo,
-                            CarModel = x.Car.ModelName
+                            CarModel = x.Car.ModelName,
+                            LocationId = x.LocationId,
+                            ModelLineId = x.ModelLineId,
                         })
                         .ToList();
 
@@ -487,7 +489,7 @@ namespace BusinessLogic
                 .Select(p => new GenericDropdown()
                 {
                     id = p.Id,
-                    text = p.City + p.ZipCode,
+                    text = p.City +  " " + p.ZipCode,
                 }).OrderBy(x => x.id).ToList();
 
                     return listFormDb;
@@ -631,15 +633,42 @@ namespace BusinessLogic
             }
         }
 
-        public void CreateTender(Tender tenderData)
+        public void CreateTender(TenderDTO tender)
         {
             try
             {
                 using (db = new ApplicationDbContext())
                 {
+                    Tender t = new Tender
+                    {
+                        CloseDate = tender.CloseDate,
+                        CreatedDate = tender.CreatedDate,
+                        OpenDate = tender.OpenDate,
+                        StatusId = tender.StatusId,
+                        TenderNo = tender.TenderNo,
+                        UserId = tender.UserId,
+                    };
 
+                  var savedTender =  db.Tender.Add(t);
+                  foreach(var tS in tender.TenderStockId)
+                    {
+                        TenderStock tenderStock = new TenderStock
+                        {
+                            TenderId = savedTender.Id,
+                            StockId = tS,
+                        };
+                        db.TenderStock.Add(tenderStock);
+                    };
 
-                    db.Tender.Add(tenderData);
+                    foreach(var tU in tender.TenderUserId)
+                    {
+                        TenderUser tenderUser = new TenderUser
+                        {
+                            TenderId = savedTender.Id,
+                            UserId = tU,
+                        };
+                        db.TenderUser.Add(tenderUser);
+                    };
                     db.SaveChanges();
                 }
             }
@@ -672,15 +701,7 @@ namespace BusinessLogic
             }
         }
 
-        public void DeleteTender(int Id)
-        {
-            using (db = new ApplicationDbContext())
-            {
-                var modelById = db.Tender.FirstOrDefault(x => x.Id == Id);
-                db.Tender.Remove(modelById);
-                db.SaveChanges();
-            }
-        }
+
 
 
         ///////

@@ -10,6 +10,8 @@ namespace BusinessLogic.DataTransferObjects
     {
         public int Id { get; set; }
         public string Location { get; set; }
+        public int ModelLineId { get; set; }
+        public int LocationId { get; set; }
         public string ModelNo { get; set; }
         public string Manufacturer { get; set; }
         public int Mileage { get; set; }
